@@ -1,0 +1,168 @@
+// Navbar
+.navbar {
+    background: linear-gradient(180deg, $brand-forest-dark 0%, $brand-forest 100%);
+    box-shadow: 0 2px 10px rgba(20, 69, 61, 0.18);
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.brand-mark {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    background: linear-gradient(135deg, $brand-amber 0%, $brand-amber-dark 100%);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+}
+
+// Hero
+.hero {
+    background: linear-gradient(135deg, $brand-forest-dark 0%, $brand-teal 100%);
+    color: #fff;
+    border-radius: $border-radius-lg;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    right: -3rem;
+    bottom: -4rem;
+    width: 16rem;
+    height: 16rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(230, 162, 60, 0.35), rgba(230, 162, 60, 0) 70%);
+    pointer-events: none;
+}
+
+.hero h1,
+.hero .lead {
+    position: relative;
+    z-index: 1;
+}
+
+.hero .btn {
+    position: relative;
+    z-index: 1;
+}
+
+// Buttons
+.btn {
+    font-weight: 600;
+}
+
+.btn-primary {
+    --bs-btn-hover-bg: #17584c;
+    --bs-btn-hover-border-color: #17584c;
+    --bs-btn-active-bg: $brand-forest-dark;
+    --bs-btn-active-border-color: $brand-forest-dark;
+}
+
+.btn-amber {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: $brand-amber;
+    --bs-btn-border-color: $brand-amber;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: $brand-amber-dark;
+    --bs-btn-hover-border-color: $brand-amber-dark;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: $brand-amber-dark;
+    --bs-btn-active-border-color: $brand-amber-dark;
+    --bs-btn-focus-shadow-rgb: 230, 162, 60;
+}
+
+// Cards
+.card {
+    border: 1px solid $card-border-color;
+    border-radius: $border-radius-lg;
+    background-color: #fff;
+}
+
+.product-card {
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.75rem 1.5rem rgba(20, 69, 61, 0.12);
+}
+
+.product-card .card-img-top {
+    height: 12rem;
+    object-fit: cover;
+    background: #efe9df;
+}
+
+.product-card .card-title a {
+    color: $brand-forest-dark;
+}
+
+.product-card .price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $brand-forest;
+}
+
+.auth-card {
+    border-top: 4px solid $brand-amber;
+    box-shadow: 0 0.5rem 1.5rem rgba(20, 69, 61, 0.08);
+}
+
+// Forms
+.form-label {
+    font-weight: 600;
+    color: $brand-forest-dark;
+}
+
+.form-control,
+.form-select {
+    border-color: $brand-input-border;
+}
+
+// Alerts
+.alert {
+    border: 0;
+    border-left: 4px solid currentColor;
+    border-radius: $border-radius;
+    font-weight: 500;
+}
+
+// Badges
+.badge {
+    font-weight: 600;
+}
+
+// Tables
+.table {
+    --bs-table-striped-bg: $table-striped-bg;
+}
+
+.table thead th {
+    color: $brand-forest-dark;
+    border-bottom-width: 2px;
+}
+
+// Footer
+.site-footer {
+    background: $brand-forest-dark;
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 3px solid $brand-amber;
+    flex-shrink: 0;
+}
+
+.site-footer a {
+    color: #fff;
+}

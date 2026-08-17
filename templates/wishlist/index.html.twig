@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma liste de souhaits — LudoShop{% endblock %}
+
+{% block body %}
+    <h1 class="h3 mb-4">Ma liste de souhaits</h1>
+
+    {% if items|length > 0 %}
+        <div class="row g-4">
+            {% for item in items %}
+                {% set product = item.product %}
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="card h-100 product-card shadow-sm">
+                        <div class="position-relative">
+                            {% if product.image %}
+                                <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="https://placehold.co/600x400?text=LudoShop" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="card-title h5">{{ product.name }}</h2>
+                            {% if product.publisher %}
+                                <p class="text-muted small">{{ product.publisher }}</p>
+                            {% endif %}
+                            {% if isOnPromotion is defined and isOnPromotion %}
+                                <span class="fw-bold">
+                                    <span class="text-decoration-line-through text-muted">{{ product.price|number_format(2, ',', ' ') }} €</span>
+                                    <span class="text-danger ms-1">{{ product.promoPriceFloat|number_format(2, ',', ' ') }} €</span>
+                                </span>
+                            {% else %}
+                                <span class="fw-bold">{{ product.price|number_format(2, ',', ' ') }} €</span>
+                            {% endif %}
+                            <div class="mt-auto d-flex flex-column gap-2 mt-3">
+                                <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-sm btn-outline-primary">Détail</a>
+                                <form method="post" action="{{ path('app_wishlist_remove', {'id': product.id}) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">Retirer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Votre liste de souhaits est vide.</p>
+        <a href="{{ path('app_catalog') }}" class="btn btn-primary">Parcourir le catalogue</a>
+    {% endif %}
+{% endblock %}
