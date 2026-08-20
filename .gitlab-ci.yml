@@ -26,7 +26,7 @@ quality:
     - php bin/console lint:twig templates
     - php bin/console lint:container
     - php vendor/bin/php-cs-fixer fix --dry-run --diff
-    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpstan analyse --no-progress --memory-limit=512M
     - php vendor/bin/phpunit --coverage-clover=var/coverage.xml
     - php bin/console doctrine:schema:validate --skip-sync
     - php bin/console doctrine:migrations:migrate --no-interaction
