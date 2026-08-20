@@ -102,7 +102,7 @@ unit-tests:
   <<: *cache-pull-push
   <<: *default-rules
   script:
-    - php vendor/bin/phpunit --no-coverage --testsuite unit
+    - php vendor/bin/phpunit --no-coverage --stderr --testsuite unit
 
 integration-tests:
   stage: test
@@ -110,7 +110,7 @@ integration-tests:
   <<: *cache-pull-push
   <<: *default-rules
   script:
-    - php vendor/bin/phpunit --no-coverage --testsuite integration
+    - php vendor/bin/phpunit --no-coverage --stderr --testsuite integration
 
 functional-tests:
   stage: test
@@ -118,7 +118,7 @@ functional-tests:
   <<: *cache-pull-push
   <<: *default-rules
   script:
-    - php vendor/bin/phpunit --no-coverage --testsuite functional
+    - php vendor/bin/phpunit --no-coverage --stderr --testsuite functional
 
 # ──────────────────────────────────────────────
 # Stage verify — validation schéma + mutations
