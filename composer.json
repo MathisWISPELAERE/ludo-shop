@@ -1,4 +1,6 @@
 {
+    "name": "ludoshop/ludo-shop",
+    "description": "Application e-commerce de jeux de société — projet d'apprentissage CI",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -84,7 +86,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.3",
-        "friendsofphp/php-cs-fixer": "^3.95",
+        "friendsofphp/php-cs-fixer": "^3.95.20",
         "infection/infection": "*",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.2",
