@@ -236,7 +236,7 @@ jobs:
           done
 
       - name: PHPUnit (unit)
-        run: php vendor/bin/phpunit --testsuite unit
+        run: php vendor/bin/phpunit --no-coverage --testsuite unit
 
   integration-tests:
     runs-on: ubuntu-latest
@@ -272,7 +272,7 @@ jobs:
           done
 
       - name: PHPUnit (integration)
-        run: php vendor/bin/phpunit --testsuite integration
+        run: php vendor/bin/phpunit --no-coverage --testsuite integration
 
   functional-tests:
     runs-on: ubuntu-latest
@@ -309,7 +309,15 @@ jobs:
           done
 
       - name: PHPUnit (functional)
-        run: php vendor/bin/phpunit --testsuite functional
+        run: php vendor/bin/phpunit --coverage-clover var/coverage.xml --testsuite functional
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: var/coverage.xml
+          retention-days: 7
 
   # ──────────────────────────────────────────────
   # Stage verify — validation schéma + mutations
