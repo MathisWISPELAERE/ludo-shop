@@ -77,12 +77,36 @@
                             <button type="submit" class="btn btn-outline-danger w-100">Annuler la commande</button>
                         </form>
                     {% elseif order.invoice %}
-                        <a href="{{ path('app_invoice_show', {'id': order.id}) }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ path('app_invoice_show', {'id': order.id}) }}" class="btn btn-outline-primary w-100 mb-2">
                             Voir la facture
+                        </a>
+                        <a href="{{ path('app_invoice_print', {'id': order.id}) }}" class="btn btn-outline-secondary w-100">
+                            Imprimer la facture
                         </a>
                     {% endif %}
                 </div>
             </div>
+
+            {% if order.statusHistory|length > 0 %}
+                <div class="card shadow-sm mt-3">
+                    <div class="card-body">
+                        <h2 class="h6">Suivi de commande</h2>
+                        <ul class="list-unstyled mb-0">
+                            {% for entry in order.statusHistory %}
+                                <li class="mb-2">
+                                    <span class="badge bg-secondary">{{ entry.status.label }}</span>
+                                    <small class="text-muted">
+                                        {{ entry.changedAt|date('d/m/Y H:i') }}
+                                        {% if entry.changedBy %}
+                                            — {{ entry.changedBy.fullName }}
+                                        {% endif %}
+                                    </small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

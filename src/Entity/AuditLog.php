@@ -26,12 +26,14 @@ class AuditLog
     #[ORM\Column(length: 100)]
     private string $action;
 
+    /** @var array<string, mixed> */
     #[ORM\Column(type: 'json')]
     private array $details = [];
 
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
 
+    /** @param array<string, mixed> $details */
     public function __construct(User $user, string $action, array $details = [])
     {
         $this->user = $user;
@@ -55,6 +57,7 @@ class AuditLog
         return $this->action;
     }
 
+    /** @return array<string, mixed> */
     public function getDetails(): array
     {
         return $this->details;

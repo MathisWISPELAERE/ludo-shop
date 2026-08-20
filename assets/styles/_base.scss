@@ -1,7 +1,46 @@
+:root {
+    --ls-bg: #{$brand-cream};
+    --ls-color: #{$brand-ink};
+    --ls-border: #{$brand-border};
+    --ls-input-border: #{$brand-input-border};
+    --ls-input-bg: #fff;
+    --ls-placeholder: #9b948a;
+    --ls-muted: #7d766c;
+    --ls-card-bg: #fff;
+    --ls-card-img-bg: #efe9df;
+    --ls-table-stripe: #f6f1e9;
+    --ls-heading-color: #{$brand-forest-dark};
+    --ls-footer-bg: #{$brand-forest-dark};
+    --ls-footer-color: rgba(255, 255, 255, 0.7);
+    --ls-footer-link: #fff;
+    --ls-card-cap-bg: rgba(20, 69, 61, 0.03);
+}
+
+[data-theme="dark"] {
+    --ls-bg: #1a1a2e;
+    --ls-color: #e0e0e0;
+    --ls-border: #333;
+    --ls-input-border: #444;
+    --ls-input-bg: #252540;
+    --ls-placeholder: #888;
+    --ls-muted: #aaa;
+    --ls-card-bg: #22223a;
+    --ls-card-img-bg: #2a2a45;
+    --ls-table-stripe: #252540;
+    --ls-heading-color: #c8d6e5;
+    --ls-footer-bg: #0d0d1a;
+    --ls-footer-color: rgba(224, 224, 224, 0.7);
+    --ls-footer-link: #e0e0e0;
+    --ls-card-cap-bg: rgba(31, 111, 92, 0.08);
+}
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--ls-bg);
+    color: var(--ls-color);
+    transition: background-color 0.2s, color 0.2s;
 }
 
 main {
@@ -9,7 +48,7 @@ main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: $headings-color;
+    color: var(--ls-heading-color);
     letter-spacing: -0.01em;
 }
 
@@ -18,5 +57,5 @@ a {
 }
 
 .text-muted {
-    color: #7d766c !important;
+    color: var(--ls-muted) !important;
 }

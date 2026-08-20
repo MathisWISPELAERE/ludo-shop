@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\User;
 use App\Form\CheckoutFormType;
+use App\Service\AddressService;
 use App\Service\CartService;
 use App\Service\InvoiceService;
+use App\Service\OrderMailerService;
 use App\Service\OrderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +24,8 @@ class OrderController extends AbstractController
         private readonly CartService $cartService,
         private readonly OrderService $orderService,
         private readonly InvoiceService $invoiceService,
+        private readonly AddressService $addressService,
+        private readonly OrderMailerService $orderMailerService,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
@@ -29,27 +33,36 @@ class OrderController extends AbstractController
     #[Route('/checkout', name: 'app_checkout', methods: ['GET'])]
     public function checkout(): Response
     {
-        $cart = $this->cartService->getOrCreateCart($this->getCurrentUser());
+        $user = $this->getCurrentUser();
+        $cart = $this->cartService->getOrCreateCart($user);
         if (0 === $cart->getItems()->count()) {
             $this->addFlash('warning', 'Votre panier est vide.');
 
             return $this->redirectToRoute('app_cart');
         }
 
-        $form = $this->createForm(CheckoutFormType::class);
+        $defaultAddress = $this->addressService->getDefault($user);
+        $form = $this->createForm(CheckoutFormType::class, null, [
+            'default_address' => $defaultAddress,
+        ]);
 
         return $this->render('order/checkout.html.twig', [
             'cart' => $cart,
             'total' => $this->cartService->getTotal($cart),
             'form' => $form,
+            'addresses' => $this->addressService->findByUser($user),
         ]);
     }
 
     #[Route('/checkout', name: 'app_checkout_create', methods: ['POST'])]
     public function create(Request $request): Response
     {
-        $cart = $this->cartService->getOrCreateCart($this->getCurrentUser());
-        $form = $this->createForm(CheckoutFormType::class);
+        $user = $this->getCurrentUser();
+        $cart = $this->cartService->getOrCreateCart($user);
+        $defaultAddress = $this->addressService->getDefault($user);
+        $form = $this->createForm(CheckoutFormType::class, null, [
+            'default_address' => $defaultAddress,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,6 +87,7 @@ class OrderController extends AbstractController
             'cart' => $cart,
             'total' => $this->cartService->getTotal($cart),
             'form' => $form,
+            'addresses' => $this->addressService->findByUser($user),
         ]);
     }
 
@@ -108,6 +122,7 @@ class OrderController extends AbstractController
         try {
             $this->orderService->pay($order);
             $this->invoiceService->createForOrder($order);
+            $this->orderMailerService->sendOrderConfirmation($order);
             $this->addFlash('success', 'Paiement simulé accepté. Votre facture est disponible.');
         } catch (\DomainException $e) {
             $this->addFlash('danger', $e->getMessage());

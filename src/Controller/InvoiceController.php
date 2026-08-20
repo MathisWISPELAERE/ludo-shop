@@ -30,4 +30,24 @@ class InvoiceController extends AbstractController
             'order' => $order,
         ]);
     }
+
+    #[Route('/orders/{id}/invoice/print', name: 'app_invoice_print', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function print(Order $order): Response
+    {
+        if ($order->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $invoice = $order->getInvoice();
+        if (null === $invoice) {
+            $this->addFlash('warning', 'Aucune facture disponible pour cette commande.');
+
+            return $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);
+        }
+
+        return $this->render('invoice/print.html.twig', [
+            'invoice' => $invoice,
+            'order' => $order,
+        ]);
+    }
 }

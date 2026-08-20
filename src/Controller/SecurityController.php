@@ -43,6 +43,11 @@ class SecurityController extends AbstractController
 
             if ($form->isValid()) {
                 $user->setPassword($this->passwordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+
+                if ($user->isNewsletterSubscribed()) {
+                    $user->setNewsletterToken(bin2hex(random_bytes(32)));
+                }
+
                 $this->entityManager->persist($user);
                 $this->emailVerificationService->issueToken($user);
 

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Validator\PasswordComplexity;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,6 +17,9 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<mixed>
+ */
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -63,6 +67,12 @@ class RegistrationFormType extends AbstractType
                     new NotBlank(message: 'Veuillez saisir un mot de passe.'),
                     new PasswordComplexity(user: $builder->getData()),
                 ],
+            ])
+            ->add('newsletterSubscribed', CheckboxType::class, [
+                'label' => 'Je souhaite recevoir la newsletter',
+                'required' => false,
+                'attr' => ['class' => 'form-check-input'],
+                'label_attr' => ['class' => 'form-check-label'],
             ]);
     }
 

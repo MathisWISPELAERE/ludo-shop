@@ -26,6 +26,36 @@
     font-weight: 500;
 }
 
+// Theme toggle
+.theme-toggle {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    font-size: 1.05rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.theme-toggle .icon-sun,
+[data-theme="dark"] .theme-toggle .icon-moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+    display: inline;
+}
+
 // Hero
 .hero {
     background: linear-gradient(135deg, $brand-forest-dark 0%, $brand-teal 100%);
@@ -85,9 +115,13 @@
 
 // Cards
 .card {
-    border: 1px solid $card-border-color;
+    border: 1px solid var(--ls-border);
     border-radius: $border-radius-lg;
-    background-color: #fff;
+    background-color: var(--ls-card-bg);
+}
+
+.card-cap {
+    background-color: var(--ls-card-cap-bg);
 }
 
 .product-card {
@@ -103,11 +137,11 @@
 .product-card .card-img-top {
     height: 12rem;
     object-fit: cover;
-    background: #efe9df;
+    background: var(--ls-card-img-bg);
 }
 
 .product-card .card-title a {
-    color: $brand-forest-dark;
+    color: var(--ls-heading-color);
 }
 
 .product-card .price {
@@ -124,12 +158,18 @@
 // Forms
 .form-label {
     font-weight: 600;
-    color: $brand-forest-dark;
+    color: var(--ls-heading-color);
 }
 
 .form-control,
 .form-select {
-    border-color: $brand-input-border;
+    border-color: var(--ls-input-border);
+    background-color: var(--ls-input-bg);
+    color: var(--ls-color);
+}
+
+.form-control::placeholder {
+    color: var(--ls-placeholder);
 }
 
 // Alerts
@@ -147,22 +187,117 @@
 
 // Tables
 .table {
-    --bs-table-striped-bg: $table-striped-bg;
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: var(--ls-table-stripe);
 }
 
 .table thead th {
-    color: $brand-forest-dark;
+    color: var(--ls-heading-color);
     border-bottom-width: 2px;
 }
 
 // Footer
 .site-footer {
-    background: $brand-forest-dark;
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--ls-footer-bg);
+    color: var(--ls-footer-color);
     border-top: 3px solid $brand-amber;
     flex-shrink: 0;
 }
 
 .site-footer a {
-    color: #fff;
+    color: var(--ls-footer-link);
+}
+
+// Skeleton loading
+.skeleton {
+    background: linear-gradient(90deg, var(--ls-border) 25%, var(--ls-card-img-bg) 50%, var(--ls-border) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: $border-radius;
+    min-height: 1rem;
+}
+
+.skeleton-text {
+    height: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-text:last-child {
+    width: 70%;
+}
+
+.skeleton-card {
+    height: 18rem;
+    border-radius: $border-radius-lg;
+}
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}
+
+// Toast notifications
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toast-notification {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: $border-radius;
+    background: var(--ls-card-bg);
+    color: var(--ls-color);
+    border: 1px solid var(--ls-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 18rem;
+    max-width: 24rem;
+    animation: toast-in 0.3s ease-out;
+    font-weight: 500;
+}
+
+.toast-notification.toast-success {
+    border-left: 4px solid $brand-teal;
+}
+
+.toast-notification.toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-notification.removing {
+    animation: toast-out 0.25s ease-in forwards;
+}
+
+.toast-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--ls-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    line-height: 1;
+}
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-out {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100%); }
 }

@@ -70,6 +70,33 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/products/fragment', name: 'app_catalog_fragment', methods: ['GET'])]
+    public function fragment(ProductRepository $productRepository, PromotionService $promotionService, Request $request): Response
+    {
+        $criteria = [
+            'q' => $this->nullableString($request, 'q'),
+            'publisher' => $this->nullableString($request, 'publisher'),
+            'price_min' => $this->nullableString($request, 'price_min'),
+            'price_max' => $this->nullableString($request, 'price_max'),
+            'min_age' => $this->nullableInt($request, 'min_age'),
+            'max_age' => $this->nullableInt($request, 'max_age'),
+            'min_players' => $this->nullableInt($request, 'min_players'),
+            'max_players' => $this->nullableInt($request, 'max_players'),
+            'max_playtime' => $this->nullableInt($request, 'max_playtime'),
+        ];
+
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 9;
+        $includeMature = $this->isMatureAllowed();
+
+        $products = $productRepository->search($criteria, $includeMature, $limit, ($page - 1) * $limit);
+
+        return $this->render('catalog/_product_grid.html.twig', [
+            'products' => $products,
+            'promotionService' => $promotionService,
+        ]);
+    }
+
     #[Route('/products/{id}', name: 'app_product_show', requirements: ['id' => '\d+'])]
     public function show(
         Product $product,

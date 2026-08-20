@@ -32,6 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private string $lastName = '';
 
+    /** @var list<string> */
     #[ORM\Column]
     private array $roles = [];
 
@@ -149,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
-        return array_unique($roles);
+        return array_values(array_unique($roles));
     }
 
     /** @param list<string> $roles */
@@ -333,7 +334,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->email ?: 'anonymous';
     }
 
     public function eraseCredentials(): void

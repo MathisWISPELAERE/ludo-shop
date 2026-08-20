@@ -1,0 +1,41 @@
+stages:
+  - quality
+
+variables:
+  COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.composer-cache"
+  PHP_VERSION: "8.3"
+
+cache:
+  key: "${CI_JOB_REF_SLUG}"
+  paths:
+    - .composer-cache/
+    - vendor/
+
+quality:
+  stage: quality
+  image: php:${PHP_VERSION}
+  before_script:
+    - apt-get update && apt-get install -y git unzip libicu-dev libzip-dev
+    - docker-php-ext-install intl zip opcache
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --prefer-dist --no-progress --no-interaction
+  script:
+    - composer validate --strict
+    - composer audit --no-interaction
+    - php bin/console lint:yaml config
+    - php bin/console lint:twig templates
+    - php bin/console lint:container
+    - php vendor/bin/php-cs-fixer fix --dry-run --diff
+    - php vendor/bin/phpstan analyse --no-progress
+    - php vendor/bin/phpunit --coverage-clover=var/coverage.xml
+    - php bin/console doctrine:schema:validate --skip-sync
+    - php bin/console doctrine:migrations:migrate --no-interaction
+    - php bin/console doctrine:fixtures:load --no-interaction
+    - php vendor/bin/infection --threads=4 --show-mutations --no-progress
+  artifacts:
+    paths:
+      - var/coverage.xml
+    expire_in: 7 days
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

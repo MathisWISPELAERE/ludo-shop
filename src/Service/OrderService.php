@@ -75,14 +75,14 @@ class OrderService
 
     public function pay(Order $order): void
     {
-        $this->orderStatusService->transition($order, OrderStatus::Paid);
+        $this->orderStatusService->transition($order, OrderStatus::Paid, $order->getUser());
         $order->setPaidAt(new \DateTimeImmutable());
         $this->entityManager->flush();
     }
 
     public function cancel(Order $order): void
     {
-        $this->orderStatusService->transition($order, OrderStatus::Cancelled);
+        $this->orderStatusService->transition($order, OrderStatus::Cancelled, $order->getUser());
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
             if (null !== $product) {

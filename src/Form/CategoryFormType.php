@@ -11,6 +11,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<mixed>
+ */
 class CategoryFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -18,11 +21,11 @@ class CategoryFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom de la catégorie',
-                'constraints' => [new NotBlank(['message' => 'Veuillez saisir un nom.'])],
+                'constraints' => [new NotBlank(message: 'Veuillez saisir un nom.')],
             ])
             ->add('slug', TextType::class, [
                 'label' => 'Slug (URL)',
-                'constraints' => [new NotBlank(['message' => 'Veuillez saisir un slug.'])],
+                'constraints' => [new NotBlank(message: 'Veuillez saisir un slug.')],
             ]);
     }
 

@@ -64,4 +64,10 @@ class ReviewService
     {
         return $this->reviewRepository->averageRating($product);
     }
+
+    public function toggleVisibility(Review $review): void
+    {
+        $review->setIsHidden(!$review->isHidden());
+        $this->entityManager->flush();
+    }
 }

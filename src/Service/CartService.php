@@ -16,7 +16,7 @@ class CartService
 
     public function getOrCreateCart(User $user): Cart
     {
-        $cart = $user->getCart();
+        $cart = $this->entityManager->getRepository(Cart::class)->findOneBy(['user' => $user]);
         if (null === $cart) {
             $cart = new Cart($user);
             $this->entityManager->persist($cart);

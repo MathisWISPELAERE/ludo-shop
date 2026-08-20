@@ -61,6 +61,10 @@ class Order
     #[ORM\OneToOne(mappedBy: 'order', cascade: ['persist'])]
     private ?Invoice $invoice = null;
 
+    /** @var Collection<int, OrderStatusHistory> */
+    #[ORM\OneToMany(targetEntity: OrderStatusHistory::class, mappedBy: 'order', orphanRemoval: true)]
+    private Collection $statusHistory;
+
     public function __construct(
         string $number,
         User $user,
@@ -76,6 +80,7 @@ class Order
         $this->postalCode = $postalCode;
         $this->country = $country;
         $this->items = new ArrayCollection();
+        $this->statusHistory = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -211,5 +216,11 @@ class Order
     public function getInvoice(): ?Invoice
     {
         return $this->invoice;
+    }
+
+    /** @return Collection<int, OrderStatusHistory> */
+    public function getStatusHistory(): Collection
+    {
+        return $this->statusHistory;
     }
 }

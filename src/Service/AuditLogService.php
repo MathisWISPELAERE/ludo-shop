@@ -18,6 +18,7 @@ class AuditLogService
     {
     }
 
+    /** @param array<string, mixed> $details */
     public function log(User $user, string $action, array $details = []): AuditLog
     {
         $entry = new AuditLog($user, $action, $details);

@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<mixed>
+ */
 class ResetPasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -23,7 +26,7 @@ class ResetPasswordFormType extends AbstractType
                 'first_options' => ['label' => 'Nouveau mot de passe', 'attr' => ['autocomplete' => 'new-password']],
                 'second_options' => ['label' => 'Confirmation'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Veuillez saisir un mot de passe.']),
+                    new NotBlank(message: 'Veuillez saisir un mot de passe.'),
                     new PasswordComplexity(user: $options['user']),
                 ],
             ]);

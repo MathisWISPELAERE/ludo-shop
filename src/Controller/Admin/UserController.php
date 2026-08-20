@@ -35,7 +35,7 @@ class UserController extends AbstractController
     #[Route('/{id}/reset-password', name: 'app_admin_user_reset_password', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function resetPassword(User $user, Request $request): Response
     {
-        if (!$this->isCsrfTokenValid('reset_password', $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('reset_password', $request->request->get('_token') ? (string) $request->request->get('_token') : null)) {
             throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
 

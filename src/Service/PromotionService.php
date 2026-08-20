@@ -11,7 +11,7 @@ class PromotionService
     public function getCurrentPrice(Product $product, ?\DateTimeInterface $now = null): float
     {
         if ($this->isOnPromotion($product, $now)) {
-            return $product->getPromoPriceFloat();
+            return $product->getPromoPriceFloat() ?? $product->getPriceFloat();
         }
 
         return $product->getPriceFloat();

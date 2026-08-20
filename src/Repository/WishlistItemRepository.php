@@ -19,6 +19,7 @@ class WishlistItemRepository extends ServiceEntityRepository
         parent::__construct($registry, WishlistItem::class);
     }
 
+    /** @return list<WishlistItem> */
     public function findByUser(User $user): array
     {
         return $this->createQueryBuilder('w')

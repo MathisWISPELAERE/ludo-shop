@@ -20,6 +20,7 @@ class StockAlertRepository extends ServiceEntityRepository
         parent::__construct($registry, StockAlert::class);
     }
 
+    /** @return list<StockAlert> */
     public function findPendingByProduct(Product $product): array
     {
         return $this->createQueryBuilder('sa')
@@ -30,6 +31,7 @@ class StockAlertRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /** @return list<StockAlert> */
     public function findPendingForInStockProducts(): array
     {
         return $this->createQueryBuilder('sa')

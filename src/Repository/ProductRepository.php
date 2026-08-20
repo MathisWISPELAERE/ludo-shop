@@ -89,6 +89,7 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /** @param array<string, mixed> $criteria */
     public function countSearch(array $criteria, bool $includeMature): int
     {
         $qb = $this->buildSearchQuery($criteria, $includeMature)
@@ -98,6 +99,7 @@ class ProductRepository extends ServiceEntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+    /** @param array<string, mixed> $criteria */
     private function buildSearchQuery(array $criteria, bool $includeMature): QueryBuilder
     {
         $qb = $this->createQueryBuilder('p')
