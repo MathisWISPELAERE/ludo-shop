@@ -137,7 +137,8 @@ infection:
   image: php:${PHP_VERSION}
   before_script:
     - apt-get update && apt-get install -y git unzip libicu-dev libzip-dev
-    - docker-php-ext-install intl zip opcache pcov
+    - docker-php-ext-install intl zip opcache
+    - pecl install pcov && docker-php-ext-enable pcov
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - |
       for i in 1 2 3; do
