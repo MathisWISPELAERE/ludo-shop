@@ -308,6 +308,9 @@ jobs:
             sleep 10
           done
 
+      - name: Build SASS
+        run: php bin/console sass:build
+
       - name: PHPUnit (functional)
         run: php vendor/bin/phpunit --coverage-clover var/coverage.xml --stderr --testsuite functional
 

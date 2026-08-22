@@ -118,6 +118,7 @@ functional-tests:
   <<: *cache-pull-push
   <<: *default-rules
   script:
+    - php bin/console sass:build
     - php vendor/bin/phpunit --no-coverage --stderr --testsuite functional
 
 # ──────────────────────────────────────────────
