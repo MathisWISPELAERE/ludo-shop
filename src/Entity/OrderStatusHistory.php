@@ -16,7 +16,7 @@ class OrderStatusHistory
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'statusHistory')]
     #[ORM\JoinColumn(nullable: false)]
     private Order $order;
 

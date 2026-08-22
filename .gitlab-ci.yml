@@ -134,7 +134,17 @@ schema-verify:
 
 infection:
   stage: verify
-  <<: *php-setup
+  image: php:${PHP_VERSION}
+  before_script:
+    - apt-get update && apt-get install -y git unzip libicu-dev libzip-dev
+    - docker-php-ext-install intl zip opcache pcov
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - |
+      for i in 1 2 3; do
+        composer install --prefer-dist --no-progress --no-interaction && break
+        echo "Composer install failed (attempt $i/3), retrying in 10s..."
+        sleep 10
+      done
   <<: *cache-pull
   <<: *default-rules
   script:
