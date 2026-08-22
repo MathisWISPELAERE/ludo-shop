@@ -4,15 +4,41 @@
 > d'intégration continue. Il explique tout, étape par étape, du premier commit à la
 > première pipeline verte.
 
+## Choix de la plateforme
+
+Vous avez le choix entre **GitHub Actions** et **GitLab CI**. Les deux font la même
+chose — choisissez celle que votre groupe utilise.
+
+| | GitHub Actions | GitLab CI |
+|---|---|---|
+| **Fichier de config** | `.github/workflows/ci.yml` | `.gitlab-ci.yml` |
+| **Interface** | Onglet "Actions" | Menu "Build → Pipelines" |
+| **Gratuit** | ✅ (2000 min/mois) | ✅ (400 min/mois) |
+| **Lien** | [github.com](https://github.com) | [gitlab.com](https://gitlab.com) |
+
 ## Contenu
+
+### Communs
+
+| Fichier | Contenu |
+|---------|---------|
+| [03-deboguer-pipeline.md](03-deboguer-pipeline.md) | Lire les logs et corriger une pipeline rouge |
+| [04-pieges-courants.md](04-pieges-courants.md) | Les erreurs les plus fréquentes et comment les éviter |
+| [05-glossaire.md](05-glossaire.md) | Dictionnaire des termes CI/CD |
+
+### GitHub Actions
 
 | Fichier | Contenu |
 |---------|---------|
 | [01-github-repo.md](01-github-repo.md) | Créer un dépôt GitHub et y pousser votre code |
 | [02-workflow.md](02-workflow.md) | Écrire un workflow GitHub Actions pas à pas |
-| [03-deboguer-pipeline.md](03-deboguer-pipeline.md) | Lire les logs et corriger une pipeline rouge |
-| [04-pieges-courants.md](04-pieges-courants.md) | Les erreurs les plus fréquentes et comment les éviter |
-| [05-glossaire.md](05-glossaire.md) | Dictionnaire des termes CI/CD |
+
+### GitLab CI
+
+| Fichier | Contenu |
+|---------|---------|
+| [01b-gitlab-repo.md](01b-gitlab-repo.md) | Créer un dépôt GitLab et y pousser votre code |
+| [02b-gitlab-ci.md](02b-gitlab-ci.md) | Écrire un fichier `.gitlab-ci.yml` pas à pas |
 
 ## Qu'est-ce que la CI ?
 
@@ -42,7 +68,7 @@ la branche principale.
 2. Écrire du code            (éditeur de code)
 3. Tester en local           php vendor/bin/phpunit
 4. Push                      git push origin ma-feature
-5. Pipeline automatique      GitHub Actions vérifie tout
+5. Pipeline automatique      GitHub Actions / GitLab CI vérifie tout
 6. Pipeline verte ?          Oui → merger  /  Non → corriger
 ```
 
@@ -59,16 +85,19 @@ la branche principale.
 
 Avant de commencer, assurez-vous d'avoir :
 
-- [x] Un compte **GitHub** (gratuit)
+- [x] Un compte **GitHub** ou **GitLab** (gratuit)
 - [x] **Git** installé sur votre machine
 - [x] Un éditeur de code (VS Code recommandé)
 - [x] Le projet LudoShop cloné localement
 
 ## Par où commencer ?
 
-1. **Commencez par le fichier [01-github-repo.md](01-github-repo.md)** pour créer votre
-   dépôt GitHub.
-2. Ensuite, suivez le [02-workflow.md](02-workflow.md) pour écrire votre premier workflow.
+1. **Choisissez votre plateforme** :
+   - GitHub → commencez par le [01-github-repo.md](01-github-repo.md)
+   - GitLab → commencez par le [01b-gitlab-repo.md](01b-gitlab-repo.md)
+2. Ensuite, suivez le fichier workflow correspondant :
+   - GitHub → [02-workflow.md](02-workflow.md)
+   - GitLab → [02b-gitlab-ci.md](02b-gitlab-ci.md)
 3. En cas de problème, consultez le [03-deboguer-pipeline.md](03-deboguer-pipeline.md).
 4. Consultez le [04-pieges-courants.md](04-pieges-courants.md) pour éviter les erreurs
    classiques.

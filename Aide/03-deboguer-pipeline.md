@@ -6,8 +6,11 @@
 
 ### Étape 1 — Identifier l'étape en erreur
 
-Sur GitHub, allez dans l'onglet **"Actions"** → cliquez sur le pipeline en cours →
+**GitHub Actions** : allez dans l'onglet **"Actions"** → cliquez sur le pipeline en cours →
 cliquez sur le **job** en erreur.
+
+**GitLab CI** : allez dans **"Build → Pipelines"** → cliquez sur le pipeline en cours →
+cliquez sur le **job** `quality` en erreur.
 
 Vous verrez quelque chose comme :
 
@@ -187,12 +190,50 @@ git commit -m "fix(security): update vulnerable dependency"
 git push
 ```
 
+### 9. PHPStan dépasse la limite mémoire (GitLab CI)
+
+```
+Child process error: PHPStan process crashed because it reached
+configured PHP memory limit: 128M
+```
+
+**Cause** : GitLab CI alloue par défaut 128M de mémoire par processus.
+
+**Fix** : ajoutez `--memory-limit=512M` à la commande PHPStan dans `.gitlab-ci.yml` :
+```yaml
+script:
+  - php vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+```
+
+### 10. Composer validate échoue (GitHub)
+
+```
+./composer.json is valid for simple usage with Composer but has
+strict errors that make it unable to be published as a package
+# Publish errors
+- name : The property name is required
+```
+
+**Cause** : `composer validate --strict` exige les champs `name` et `description`.
+
+**Fix** : ajoutez-les dans `composer.json` :
+```json
+{
+    "name": "votre-utilisateur/ludo-shop",
+    "description": "Application e-commerce de jeux de société",
+    ...
+}
+```
+
 ## Astuces de diagnostic
 
 ### Lire le log depuis le début
 
-Le log peut être long. Utilisez le bouton **"Download log"** dans GitHub Actions
-pour télécharger le fichier complet, puis ouvrez-le dans votre éditeur.
+Le log peut être long.
+- **GitHub** : utilisez le bouton **"Download log"** pour télécharger le fichier complet.
+- **GitLab** : cliquez sur **"Download"** en haut à droite du log.
+
+Puis ouvrez-le dans votre éditeur.
 
 ### Reproduire exactement la commande du CI
 

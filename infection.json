@@ -7,7 +7,7 @@
     },
     "timeout": 300,
     "testFramework": "phpunit",
-    "testFrameworkOptions": "--testsuite=Project\\ Test\\ Suite",
+    "testFrameworkOptions": "--testsuite=unit,integration,functional",
     "logs": {
         "text": "var/infection.log",
         "summary": "var/infection-summary.log",

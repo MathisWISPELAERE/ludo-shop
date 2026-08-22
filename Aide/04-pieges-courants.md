@@ -4,27 +4,31 @@
 
 ## Erreurs de configuration
 
-### ❌ Oublier le fichier `.github/workflows/ci.yml`
+### ❌ Oublier le fichier de configuration CI
 
-**Problème** : le pipeline ne se lance jamais. Vous ne voyez aucun onglet "Actions"
-sur GitHub.
+**Problème** : le pipeline ne se lance jamais.
 
-**Solution** : vérifiez que le fichier est bien à cet emplacement exact :
-```
-.github/workflows/ci.yml
-```
-Pas `github/`, pas `.github/ci.yml`, pas `.github/workflows/ci.yml.yaml`.
+**Solution** : vérifiez que le fichier existe selon votre plateforme :
+
+| Plateforme | Fichier requis | Emplacement exact |
+|-----------|---------------|-------------------|
+| GitHub | `.github/workflows/ci.yml` | Dans un dossier `.github/workflows/` |
+| GitLab | `.gitlab-ci.yml` | À la racine du projet |
+
+> Pas `github/`, pas `.github/ci.yml`, pas `.gitlab-ci.yaml`.
 
 ### ❌ Mauvais nom de fichier
 
-**Problème** : le fichier existe mais GitHub ne le détecte pas.
+**Problème** : le fichier existe mais la plateforme ne le détecte pas.
 
-**Solution** : le fichier doit s'appeler `ci.yml` (ou `ci.yaml`) et se trouver
-dans `.github/workflows/`. Vérifiez les extensions :
+**Solution** :
+- **GitHub** : le fichier doit s'appeler `ci.yml` (ou `ci.yaml`) dans `.github/workflows/`
+- **GitLab** : le fichier doit s'appeler `.gitlab-ci.yml` à la racine
 
 ```bash
-ls -la .github/workflows/
-# Vous devez voir : ci.yml
+# Vérifier
+ls -la .gitlab-ci.yml          # GitLab
+ls -la .github/workflows/      # GitHub
 ```
 
 ### ❌ Syntaxe YAML incorrecte
@@ -87,13 +91,24 @@ your minimum-stability (stable) setting.
 
 **Problème** : le pipeline met 5+ minutes à cause de `composer install`.
 
-**Solution** : utilisez le cache Composer dans le workflow :
+**Solution** : activez le cache :
+
+**GitHub Actions** :
 ```yaml
 - name: Cache Composer
   uses: actions/cache@v4
   with:
     path: ~/.cache/composer
     key: composer-${{ hashFiles('composer.lock') }}
+```
+
+**GitLab CI** :
+```yaml
+cache:
+  key: "${CI_JOB_REF_SLUG}"
+  paths:
+    - .composer-cache/
+    - vendor/
 ```
 
 ### ❌ Extension PHP manquante dans le CI
@@ -103,13 +118,22 @@ your minimum-stability (stable) setting.
 Error: Class "SQLite3" not found
 ```
 
-**Solution** : installez l'extension dans le workflow :
+**Solution** :
+
+**GitHub Actions** :
 ```yaml
 - name: Setup PHP
   uses: shivammathur/setup-php@v2
   with:
     php-version: '8.3'
     extensions: sqlite3, intl, mbstring, zip
+```
+
+**GitLab CI** :
+```yaml
+before_script:
+  - apt-get update && apt-get install -y libicu-dev libzip-dev
+  - docker-php-ext-install intl zip opcache
 ```
 
 ## Erreurs de commande
@@ -186,7 +210,7 @@ peuvent s'exécuter avant qu'il soit prêt.
   run: php vendor/bin/phpunit --filter=functional
 ```
 
-### ❌ Oublier `workflow_dispatch`
+### ❌ Oublier le lancement manuel (GitHub)
 
 **Problème** : vous ne pouvez pas lancer manuellement le pipeline depuis GitHub.
 
@@ -198,6 +222,18 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:    # ← permet le lancement manuel
+```
+
+### ❌ Ne pas déclencher sur les Merge Requests (GitLab)
+
+**Problème** : le pipeline ne se lance que sur `main`, pas sur les MR.
+
+**Solution** : ajoutez `rules` :
+```yaml
+quality:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 ```
 
 ## Erreurs de code qui cassent le CI

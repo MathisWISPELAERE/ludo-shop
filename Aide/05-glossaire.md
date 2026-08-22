@@ -76,6 +76,15 @@ Nouveau format ESLint 9. Le fichier `eslint.config.js` utilise du JS pur (rempla
 ### GitHub Actions
 Plateforme CI de GitHub. Elle exécute des workflows YAML à chaque push ou pull request.
 
+### GitLab CI
+Plateforme CI de GitLab. Elle exécute des pipelines définis dans `.gitlab-ci.yml`
+à chaque push ou merge request. Similaire à GitHub Actions mais avec une syntaxe
+et une interface différentes.
+
+### GitLab Runner
+Machine qui exécute les jobs GitLab CI. Contrairement à GitHub Actions, les runners
+peuvent être partagés (instances managées) ou installés sur vos propres machines.
+
 ## I
 
 ### Infection
@@ -96,7 +105,11 @@ Vérification du code source selon des règles de syntaxe et de style. **Exemple
 
 ### Merge
 Fusionner une branche dans une autre (généralement `feat/xxx` → `main`).
-Se fait via une Pull Request après validation du pipeline.
+Se fait via une Pull Request (GitHub) ou Merge Request (GitLab) après validation du pipeline.
+
+### Merge Request (GitLab)
+Équivalent de la Pull Request sur GitHub. C'est une demande de fusion de branche
+qui déclenche le pipeline CI.
 
 ### MSI (Mutation Score Indicator)
 Pourcentage de mutations (bugs injectés) détectées par les tests. MSI 80 % = les tests
@@ -113,17 +126,18 @@ Enchaînement d'étapes automatiques : lint → analyse → tests → sécurité
 Un pipeline est "verte" si tout passe, "rouge" si une étape échoue.
 
 ### PR (Pull Request)
-Demande de fusion de branche. Le pipeline CI s'exécute sur la PR avant de permettre
-le merge.
+Demande de fusion de branche sur **GitHub**. Le pipeline CI s'exécut sur la PR avant de
+permettre le merge.
 
 ### PSR-12
-标准 de style de code PHP. PHP-CS-Fixer vérifie que le code le respecte.
+Standard de style de code PHP. PHP-CS-Fixer vérifie que le code le respecte.
 
 ## R
 
 ### Runner
-Machine virtuelle qui exécute le pipeline. GitHub Actions fournit des runners
-Ubuntu, Windows, et macOS.
+Machine virtuelle qui exécute le pipeline.
+- **GitHub Actions** : runners Ubuntu, Windows, macOS (fournis par GitHub)
+- **GitLab CI** : runners partagés ou auto-hébergés
 
 ## S
 
@@ -133,16 +147,17 @@ Vérification que le schéma Doctrine est synchronisé avec les mappings PHP.
 ## W
 
 ### Workflow
-Fichier YAML qui définit un pipeline CI. Il spécifie le déclencheur, la machine,
-et les étapes à exécuter.
+Fichier YAML qui définit un pipeline CI sur **GitHub Actions**. Il spécifie le
+déclencheur, la machine, et les étapes à exécuter. L'équivalent GitLab est le
+fichier `.gitlab-ci.yml`.
 
 ## Vocabulaire des résultats
 
 | Terme | Signification |
 |-------|---------------|
-| **Vert (green)** | Tous les checks passent |
-| **Rouge (red)** | Au moins un check échoue |
-| **En cours (pending)** | Le pipeline s'exécute |
+| **Vert (green / passed)** | Tous les checks passent |
+| **Rouge (red / failed)** | Au moins un check échoue |
+| **En cours (pending / running)** | Le pipeline s'exécut |
 | **Annulé (cancelled)** | Le pipeline a été arrêté manuellement |
 | **Ignoré (skipped)** | Une étape a été ignorée |
 
@@ -150,9 +165,20 @@ et les étapes à exécuter.
 
 | Terme | Signification |
 |-------|---------------|
-| **Push** | Envoyer des commits vers GitHub |
-| **Pull** | Récupérer les commits depuis GitHub |
+| **Push** | Envoyer des commits vers le dépôt distant |
+| **Pull** | Récupérer les commits depuis le dépôt distant |
 | **Clone** | Copier un dépôt distant sur sa machine |
 | **Fork** | Copier le dépôt de quelqu'un sur son propre compte |
 | **HEAD** | Le dernier commit de la branche courante |
 | **Rebase** | Réécrire l'historique pour mettre à jour une branche |
+
+## Vocabulaire GitHub vs GitLab
+
+| Concept | GitHub | GitLab |
+|---------|--------|--------|
+| Demande de fusion | Pull Request (PR) | Merge Request (MR) |
+| Fichier CI | `.github/workflows/ci.yml` | `.gitlab-ci.yml` |
+| Actions / Jobs | `uses:` + `run:` | `script:` (commandes directes) |
+| Lancer manuellement | `workflow_dispatch` | `workflow_dispatch:` ou bouton "Run" |
+| Protections de branche | Branch protection rules | Protected branches |
+| Variable secrète | Secrets | CI/CD Variables |
