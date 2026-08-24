@@ -149,4 +149,5 @@ infection:
   <<: *cache-pull
   <<: *default-rules
   script:
+    - php bin/console sass:build
     - php vendor/bin/infection --threads=4 --show-mutations --no-progress
