@@ -396,4 +396,4 @@ jobs:
           done
 
       - name: Infection mutation testing
-        run: php vendor/bin/infection --threads=4 --show-mutations --no-progress
+        run: php -d memory_limit=512M vendor/bin/infection --threads=4 --show-mutations --no-progress
