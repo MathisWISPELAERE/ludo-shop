@@ -60,9 +60,7 @@ async function updateQuantity(input) {
             }
             row.remove();
             updateTotals(data.total, data.itemCount);
-            if (typeof window.showToast === 'function') {
-                window.showToast('Article retiré du panier.', 'success');
-            }
+            window.toast.success('Article retiré du panier.');
             return;
         }
 
@@ -87,9 +85,7 @@ function showError(input, feedback, message) {
         feedback.hidden = false;
     }
     input.value = input.dataset.lastValid;
-    if (typeof window.showToast === 'function') {
-        window.showToast(message, 'error');
-    }
+    window.toast.error(message);
     announce(message);
 }
 

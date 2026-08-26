@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product;
 use App\Form\ProductFormType;
 use App\Repository\ProductRepository;
+use App\Service\StockAlertService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +17,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/products')]
 class ProductController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly StockAlertService $stockAlertService,
+    ) {
     }
 
     #[Route('', name: 'app_admin_products', methods: ['GET'])]
@@ -53,11 +56,16 @@ class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_product_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Product $product, Request $request): Response
     {
+        $previousStock = $product->getStock();
         $form = $this->createForm(ProductFormType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+
+            if ($previousStock <= 0 && $product->getStock() > 0) {
+                $this->stockAlertService->process();
+            }
 
             $this->addFlash('success', 'Produit mis à jour.');
 

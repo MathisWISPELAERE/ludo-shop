@@ -16,7 +16,7 @@ Application e-commerce de jeux de société, projet pédagogique pour l'apprenti
 | **Symfony CLI** | ≥ 1.x | Serveur de développement (optionnel) |
 | **Node.js** | ≥ 18 | Outils frontend (ESLint, Prettier, pa11y) |
 | **npm** | ≥ 9 | Installation des dépendances JS |
-| **Mailpit** | ≥ 1.x | Serveur SMTP local pour tester les emails |
+| **Mailpit** | ≥ 1.x | Serveur SMTP local pour les emails (optionnel) |
 | **Git** | ≥ 2.x | Versionning |
 
 > PHP inclut SQLite par défaut, aucun serveur de base de données n'est nécessaire.
@@ -43,6 +43,14 @@ php bin/console doctrine:fixtures:load --no-interaction
 # 5. Lancer le serveur de développement
 symfony server:start
 # → http://localhost:8000
+
+# 6. Lancer Mailpit (serveur SMTP local pour les emails)
+# Installer (une seule fois) :
+scoop install mailpit        # via Scoop
+# choco install mailpit      # OU via Chocolatey
+# Puis lancer (dans un terminal séparé) :
+mailpit
+# → http://localhost:8025 (interface web)
 ```
 
 ---

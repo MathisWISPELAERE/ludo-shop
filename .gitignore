@@ -27,3 +27,7 @@
 ###> symfonycasts/sass-bundle ###
 /public/assets/
 ###< symfonycasts/sass-bundle ###
+
+###> node ###
+/node_modules/
+###< node ###

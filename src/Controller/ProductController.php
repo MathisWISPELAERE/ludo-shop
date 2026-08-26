@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProductController extends AbstractController
 {
     #[Route('/products', name: 'app_catalog')]
-    public function index(ProductRepository $productRepository, PromotionService $promotionService, Request $request): Response
+    public function index(ProductRepository $productRepository, PromotionService $promotionService, WishlistService $wishlistService, Request $request): Response
     {
         $page = max(1, $request->query->getInt('page', 1));
         $limit = 9;
@@ -35,11 +35,12 @@ class ProductController extends AbstractController
             'maxPage' => $maxPage,
             'criteria' => [],
             'promotionService' => $promotionService,
+            'wishlistProductIds' => $this->getWishlistProductIds($wishlistService),
         ]);
     }
 
     #[Route('/products/search', name: 'app_catalog_search', methods: ['GET'])]
-    public function search(ProductRepository $productRepository, PromotionService $promotionService, Request $request): Response
+    public function search(ProductRepository $productRepository, PromotionService $promotionService, WishlistService $wishlistService, Request $request): Response
     {
         $criteria = [
             'q' => $this->nullableString($request, 'q'),
@@ -67,11 +68,12 @@ class ProductController extends AbstractController
             'maxPage' => $maxPage,
             'criteria' => $criteria,
             'promotionService' => $promotionService,
+            'wishlistProductIds' => $this->getWishlistProductIds($wishlistService),
         ]);
     }
 
     #[Route('/products/fragment', name: 'app_catalog_fragment', methods: ['GET'])]
-    public function fragment(ProductRepository $productRepository, PromotionService $promotionService, Request $request): Response
+    public function fragment(ProductRepository $productRepository, PromotionService $promotionService, WishlistService $wishlistService, Request $request): Response
     {
         $criteria = [
             'q' => $this->nullableString($request, 'q'),
@@ -94,6 +96,7 @@ class ProductController extends AbstractController
         return $this->render('catalog/_product_grid.html.twig', [
             'products' => $products,
             'promotionService' => $promotionService,
+            'wishlistProductIds' => $this->getWishlistProductIds($wishlistService),
         ]);
     }
 
@@ -172,5 +175,21 @@ class ProductController extends AbstractController
         $user = $this->getUser();
 
         return $user instanceof User && $user->isAdult();
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function getWishlistProductIds(WishlistService $wishlistService): array
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return [];
+        }
+
+        return array_values(array_filter(array_map(
+            static fn ($item) => $item->getProduct()->getId(),
+            $wishlistService->findByUser($user),
+        )));
     }
 }
