@@ -158,21 +158,23 @@ ludo-shop/
 
 ## Documentation technique
 
-Chaque outil utilisé dans le projet est documenté dans le dossier `docs/` :
+Chaque outil utilisé dans le projet est documenté dans le dossier `TD_Etudiant/docs/` (déplacé depuis `docs/`) :
 
 | Fichier | Outil | Objectif |
 |---------|-------|----------|
-| [docs/symfony.md](docs/symfony.md) | Symfony | Framework PHP backend |
-| [docs/doctrine.md](docs/doctrine.md) | Doctrine ORM | ORM et base de données |
-| [docs/twig.md](docs/twig.md) | Twig | Moteur de templates |
-| [docs/phpunit.md](docs/phpunit.md) | PHPUnit | Tests unitaires et fonctionnels |
-| [docs/phpstan.md](docs/phpstan.md) | PHPStan | Analyse statique |
-| [docs/php-cs-fixer.md](docs/php-cs-fixer.md) | PHP-CS-Fixer | Style de code |
-| [docs/infection.md](docs/infection.md) | Infection | Mutation testing |
-| [docs/eslint-prettier.md](docs/eslint-prettier.md) | ESLint + Prettier | Lint et formatage JS |
-| [docs/pa11y.md](docs/pa11y.md) | pa11y | Tests d'accessibilité |
-| [docs/mailpit.md](docs/mailpit.md) | Mailpit | Test des emails en local |
-| [docs/ci-cd.md](docs/ci-cd.md) | CI/CD | Pipelines GitHub Actions & GitLab CI |
+| [TD_Etudiant/docs/symfony.md](TD_Etudiant/docs/symfony.md) | Symfony | Framework PHP backend |
+| [TD_Etudiant/docs/doctrine.md](TD_Etudiant/docs/doctrine.md) | Doctrine ORM | ORM et base de données |
+| [TD_Etudiant/docs/twig.md](TD_Etudiant/docs/twig.md) | Twig | Moteur de templates |
+| [TD_Etudiant/docs/phpunit.md](TD_Etudiant/docs/phpunit.md) | PHPUnit | Tests unitaires et fonctionnels |
+| [TD_Etudiant/docs/phpstan.md](TD_Etudiant/docs/phpstan.md) | PHPStan | Analyse statique |
+| [TD_Etudiant/docs/php-cs-fixer.md](TD_Etudiant/docs/php-cs-fixer.md) | PHP-CS-Fixer | Style de code |
+| [TD_Etudiant/docs/infection.md](TD_Etudiant/docs/infection.md) | Infection | Mutation testing |
+| [TD_Etudiant/docs/eslint-prettier.md](TD_Etudiant/docs/eslint-prettier.md) | ESLint + Prettier | Lint et formatage JS |
+| [TD_Etudiant/docs/pa11y.md](TD_Etudiant/docs/pa11y.md) | pa11y | Tests d'accessibilité |
+| [TD_Etudiant/docs/mailpit.md](TD_Etudiant/docs/mailpit.md) | Mailpit | Test des emails en local |
+| [TD_Etudiant/docs/ci-cd.md](TD_Etudiant/docs/ci-cd.md) | CI/CD | Pipelines GitHub Actions & GitLab CI |
+
+> Les guides pédagogiques CI sont dans `TD_Etudiant/Aide/` (déplacés depuis `Aide/`). TD complet : [TD_Etudiant/README.md](TD_Etudiant/README.md)
 
 ---
 
@@ -189,7 +191,7 @@ Le pipeline CI s'exécute automatiquement à chaque push ou pull request. Il vé
 7. **Schema validate** — Schéma Doctrine à jour
 8. **Fixtures check** — Cohérence des données de démo
 
-> Consultez [docs/ci-cd.md](docs/ci-cd.md) pour les détails du pipeline.
+> Consultez [TD_Etudiant/docs/ci-cd.md](TD_Etudiant/docs/ci-cd.md) pour les détails du pipeline.
 
 ---
 

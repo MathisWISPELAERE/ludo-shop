@@ -18,10 +18,10 @@
 3. Les tests **fonctionnels** étendent `FunctionalTestCase` (qui réinitialise la base
    et charge les fixtures avant chaque test).
 4. Les fixtures sont chargées automatiquement. Les utilisateurs de démo :
-   - `admin@example.com` — administrateur
-   - `client@example.com` — client standard
-   - `minor@example.com` — mineur
-   - Mot de passe pour tous : `password`
+    - `admin@example.com` / `Admin123!` — administrateur
+    - `client@example.com` / `Client123!` — client standard
+    - `minor@example.com` / `Minor123!` — mineur
+    - `root@root.com` / `Root123!` — super-admin (secours)
 5. Les produits de démo : `CAT-001` (Catan), `LIM-001` (Limite Limite — produit mature).
 6. Lancer les tests : `php vendor/bin/phpunit --no-coverage`.
 7. Un test = une seule responsabilité. Pas de tests « fourre-tout ».
@@ -513,7 +513,7 @@ class LoginTest extends FunctionalTestCase
 
         $this->client->request('POST', '/login', [
             '_username' => 'client@example.com',
-            '_password' => 'password',
+            '_password' => 'Client123!',
             '_csrf_token' => $csrfToken,
         ]);
 
