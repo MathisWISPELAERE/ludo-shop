@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
         $admin->setLastName('LudoShop');
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setBirthDate(new \DateTimeImmutable('1990-01-01'));
-        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'password'));
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'Admin123!'));
         $admin->setEmailVerifiedAt(new \DateTimeImmutable());
         $manager->persist($admin);
 
@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
         $root->setLastName('SuperUser');
         $root->setRoles(['ROLE_ADMIN']);
         $root->setBirthDate(new \DateTimeImmutable('1985-06-15'));
-        $root->setPassword($this->passwordHasher->hashPassword($root, 'root'));
+        $root->setPassword($this->passwordHasher->hashPassword($root, 'Root123!'));
         $root->setEmailVerifiedAt(new \DateTimeImmutable());
         $manager->persist($root);
 
@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $client->setFirstName('Claire');
         $client->setLastName('Client');
         $client->setBirthDate(new \DateTimeImmutable('1995-03-20'));
-        $client->setPassword($this->passwordHasher->hashPassword($client, 'password'));
+        $client->setPassword($this->passwordHasher->hashPassword($client, 'Client123!'));
         $client->setEmailVerifiedAt(new \DateTimeImmutable());
         $manager->persist($client);
 
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         $minor->setFirstName('Mina');
         $minor->setLastName('Mineur');
         $minor->setBirthDate(new \DateTimeImmutable('2014-07-10'));
-        $minor->setPassword($this->passwordHasher->hashPassword($minor, 'password'));
+        $minor->setPassword($this->passwordHasher->hashPassword($minor, 'Minor123!'));
         $minor->setEmailVerifiedAt(new \DateTimeImmutable());
         $manager->persist($minor);
 

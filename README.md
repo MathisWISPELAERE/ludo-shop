@@ -40,7 +40,13 @@ npm install
 php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --no-interaction
 
-# 5. Lancer le serveur de développement
+#5 compiler le SCSS
+php bin/console sass:build
+# attendu : [OK] var/sass/app-*.output.css généré
+# Alternative : php bin/console sass:build --watch
+php bin/console cache:clear   # optionnel si cache stale
+
+# 6. Lancer le serveur de développement
 symfony server:start
 # → http://localhost:8000
 
