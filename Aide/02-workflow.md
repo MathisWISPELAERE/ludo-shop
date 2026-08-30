@@ -234,3 +234,10 @@ Si le pipeline échoue :
 4. Reproduisez la commande en local et corrigez
 
 → Voir le [03-deboguer-pipeline.md](03-deboguer-pipeline.md) pour plus de détails.
+
+## Et ensuite ? Bloquer le merge si la CI est rouge
+
+Ne laissez pas un merge passer alors que la CI est rouge. Configurez la protection de branche :
+
+* **Sur GitHub :** suivez le guide [06-protection-github.md](06-protection-github.md) — pour **github.com** et **GitHub Enterprise** (IUT)
+* **Sur GitLab :** suivez le pendant [06b-protection-gitlab.md](06b-protection-gitlab.md) — pour **gitlab.com** et **GitLab self-hosted IUT**

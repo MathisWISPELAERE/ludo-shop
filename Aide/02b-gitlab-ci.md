@@ -228,3 +228,10 @@ Si le pipeline échoue :
 | Actions | `uses: actions/checkout@v4` | Pas nécessaire (Git clone automatiquement) |
 | Cache | `uses: actions/cache@v4` | `cache:` (intégré) |
 | Variables | `${{ secrets.X }}` | `$CI_PROJECT_DIR`, `$CI_COMMIT_BRANCH` |
+
+## Et ensuite ? Bloquer le merge si la CI est rouge
+
+Ne laissez pas un merge passer alors que la CI est rouge. Configurez la protection de branche :
+
+* **Sur GitLab :** suivez le guide [06b-protection-gitlab.md](06b-protection-gitlab.md) — pour **gitlab.com** et **GitLab self-hosted IUT**
+* **Sur GitHub :** suivez le pendant [06-protection-github.md](06-protection-github.md) — pour **github.com** et **GitHub Enterprise** (IUT)

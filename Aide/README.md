@@ -32,6 +32,7 @@ chose — choisissez celle que votre groupe utilise.
 |---------|---------|
 | [01-github-repo.md](01-github-repo.md) | Créer un dépôt GitHub et y pousser votre code |
 | [02-workflow.md](02-workflow.md) | Écrire un workflow GitHub Actions pas à pas |
+| [06-protection-github.md](06-protection-github.md) | Bloquer le merge si la CI est rouge — GitHub (github.com & Enterprise) |
 
 ### GitLab CI
 
@@ -39,6 +40,7 @@ chose — choisissez celle que votre groupe utilise.
 |---------|---------|
 | [01b-gitlab-repo.md](01b-gitlab-repo.md) | Créer un dépôt GitLab et y pousser votre code |
 | [02b-gitlab-ci.md](02b-gitlab-ci.md) | Écrire un fichier `.gitlab-ci.yml` pas à pas |
+| [06b-protection-gitlab.md](06b-protection-gitlab.md) | Bloquer le merge si la CI est rouge — GitLab (gitlab.com & self-hosted IUT) |
 
 ## Qu'est-ce que la CI ?
 
@@ -98,7 +100,10 @@ Avant de commencer, assurez-vous d'avoir :
 2. Ensuite, suivez le fichier workflow correspondant :
    - GitHub → [02-workflow.md](02-workflow.md)
    - GitLab → [02b-gitlab-ci.md](02b-gitlab-ci.md)
-3. En cas de problème, consultez le [03-deboguer-pipeline.md](03-deboguer-pipeline.md).
+3. Puis bloquez les merges cassés :
+   - GitHub → [06-protection-github.md](06-protection-github.md) (github.com & Enterprise)
+   - GitLab → [06b-protection-gitlab.md](06b-protection-gitlab.md) (gitlab.com & self-hosted IUT)
+4. En cas de problème, consultez le [03-deboguer-pipeline.md](03-deboguer-pipeline.md).
 4. Consultez le [04-pieges-courants.md](04-pieges-courants.md) pour éviter les erreurs
    classiques.
 5. Utilisez le [05-glossaire.md](05-glossaire.md) comme dictionnaire de référence.
