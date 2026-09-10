@@ -48,9 +48,6 @@ class LoginTest extends FunctionalTestCase
 
     public function testLogoutRedirectsToHome(): void
     {
-        $crawler = $this->client->request('GET', '/login');
-        $csrfToken = $crawler->filter('input[name="_csrf_token"]')->attr('value');
-
         $this->login('client@example.com');
 
         $this->client->request('GET', '/logout');
