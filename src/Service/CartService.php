@@ -12,7 +12,8 @@ class CartService
 {
     private readonly PromotionService $promotionService;
 
-    public function __construct(private readonly EntityManagerInterface $entityManager, ?PromotionService $promotionService = null) {
+    public function __construct(private readonly EntityManagerInterface $entityManager, ?PromotionService $promotionService = null)
+    {
         $this->promotionService = $promotionService ?? new PromotionService();
     }
 

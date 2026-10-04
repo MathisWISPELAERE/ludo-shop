@@ -30,16 +30,16 @@ class ProductTest extends TestCase
     {
         $product = new Product();
         $this->assertFalse($product->isMature());
-    }   
+    }
 
     public function testIsNotAvailableWhenInactive(): void
     {
         $product = new Product();
         $product->setIsActive(false);
         $this->assertFalse($product->isAvailable());
-    } 
+    }
 
-    public function testIsNotAvailableWhenOutOfStock(): void 
+    public function testIsNotAvailableWhenOutOfStock(): void
     {
         $product = new Product();
         $product->setStock(0);

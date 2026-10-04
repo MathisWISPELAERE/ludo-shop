@@ -15,7 +15,6 @@ class PromotionServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->service = new PromotionService();
-        
     }
 
     public function testReturnsNormalPriceWhenNoPromotion(): void
@@ -31,16 +30,15 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $hier = $aujourdhui->modify('-1 day');
         $demain = $aujourdhui->modify('+1 day');
-        
+
         $product->setPromoStartsAt($hier);
         $product->setPromoEndsAt($demain);
-    
+
         $this->assertSame(40.00, $this->service->getCurrentPrice($product));
         $this->assertTrue($this->service->isOnPromotion($product));
-
     }
 
     public function testReturnsNormalPriceBeforePromotionPeriod()
@@ -48,16 +46,15 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $demain = $aujourdhui->modify('+1 day');
         $ademain = $aujourdhui->modify('+2 day');
-        
+
         $product->setPromoStartsAt($demain);
         $product->setPromoEndsAt($ademain);
-    
+
         $this->assertSame(50.00, $this->service->getCurrentPrice($product));
         $this->assertFalse($this->service->isOnPromotion($product));
-
     }
 
     public function testReturnsNormalPriceAfterPromotionPeriod()
@@ -65,16 +62,15 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $ahier = $aujourdhui->modify('-2 day');
         $hier = $aujourdhui->modify('-1 day');
-        
+
         $product->setPromoStartsAt($ahier);
         $product->setPromoEndsAt($ahier);
-    
+
         $this->assertSame(50.00, $this->service->getCurrentPrice($product));
         $this->assertFalse($this->service->isOnPromotion($product));
-
     }
 
     public function testPromoPriceEqualToNormalIsNotActive()
@@ -82,16 +78,15 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(50.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $hier = $aujourdhui->modify('-1 day');
         $demain = $aujourdhui->modify('+1 day');
-        
+
         $product->setPromoStartsAt($hier);
         $product->setPromoEndsAt($demain);
 
         $this->assertSame(50.00, $this->service->getCurrentPrice($product));
         $this->assertFalse($this->service->isOnPromotion($product));
-
     }
 
     public function testPromoPriceGreaterThanNormalIsNotActive()
@@ -99,10 +94,10 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(60.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $hier = $aujourdhui->modify('-1 day');
         $demain = $aujourdhui->modify('+1 day');
-        
+
         $product->setPromoStartsAt($hier);
         $product->setPromoEndsAt($demain);
 
@@ -115,13 +110,13 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $hier = $aujourdhui->modify('-1 day');
         $demain = $aujourdhui->modify('+1 day');
-        
+
         $product->setPromoStartsAt($demain);
         $product->setPromoEndsAt($hier);
-        
+
         $this->assertSame(50.00, $this->service->getCurrentPrice($product));
         $this->assertFalse($this->service->isOnPromotion($product));
     }
@@ -131,14 +126,14 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $demain = $aujourdhui->modify('+1 day');
-        
+
         $product->setPromoStartsAt($aujourdhui);
         $product->setPromoEndsAt($demain);
 
-        $this->assertSame(40.00, $this->service->getCurrentPrice($product,$aujourdhui));
-        $this->assertTrue($this->service->isOnPromotion($product,$aujourdhui));
+        $this->assertSame(40.00, $this->service->getCurrentPrice($product, $aujourdhui));
+        $this->assertTrue($this->service->isOnPromotion($product, $aujourdhui));
     }
 
     public function testBoundaryEndIsIncluded()
@@ -146,14 +141,14 @@ class PromotionServiceTest extends TestCase
         $product = $this->createProduct(50.00);
         $product->setPromoPrice(40.00);
         $aujourdhui = new \DateTimeImmutable('now');
-        
+
         $hier = $aujourdhui->modify('-1 day');
-        
+
         $product->setPromoStartsAt($hier);
         $product->setPromoEndsAt($aujourdhui);
 
-        $this->assertSame(40.00, $this->service->getCurrentPrice($product,$aujourdhui));
-        $this->assertTrue($this->service->isOnPromotion($product,$aujourdhui));
+        $this->assertSame(40.00, $this->service->getCurrentPrice($product, $aujourdhui));
+        $this->assertTrue($this->service->isOnPromotion($product, $aujourdhui));
     }
 
     private function createProduct(float $price, ?float $promoPrice = null): Product

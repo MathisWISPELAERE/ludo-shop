@@ -17,17 +17,17 @@ class CatalogTest extends FunctionalTestCase
     }
 
     public function testFilterByCategory(): void
-{
-    $product = $this->repository(Product::class)->findOneBy(['reference' => 'CAT-001']);
-    $this->assertNotNull($product);
-    $category = $product->getCategories()->first();
-    $this->assertNotFalse($category);
+    {
+        $product = $this->repository(Product::class)->findOneBy(['reference' => 'CAT-001']);
+        $this->assertNotNull($product);
+        $category = $product->getCategories()->first();
+        $this->assertNotFalse($category);
 
-    $this->client->request('GET', '/categories/'.$category->getSlug());
+        $this->client->request('GET', '/categories/'.$category->getSlug());
 
-    $this->assertResponseIsSuccessful();
-    $this->assertSelectorTextContains('body', 'Catan');
-}
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('body', 'Catan');
+    }
 
     public function testInactiveProductIsHidden(): void
     {

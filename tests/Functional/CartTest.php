@@ -46,7 +46,7 @@ class CartTest extends FunctionalTestCase
     //     $this->assertSelectorTextContains('input', '3');
     // }
 
-    // public function testRemoveProductFromCart(): void 
+    // public function testRemoveProductFromCart(): void
     // {
     //     $this->login('client@example.com');
 

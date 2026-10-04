@@ -18,7 +18,6 @@ class CheckoutTest extends FunctionalTestCase
         $this->client->request('GET', '/checkout');
 
         $this->assertResponseRedirects();
-        
     }
 
     public function testCheckoutCreatesOrder(): void

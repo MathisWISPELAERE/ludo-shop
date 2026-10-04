@@ -90,7 +90,7 @@ class CartServiceTest extends TestCase
         $this->assertSame(75.00, $this->service->getTotal($cart));
     }
 
-    private function createProductWithPromo(float $price = 50.00, float $promoPrice = 35.00, int $stock = 5): Product 
+    private function createProductWithPromo(float $price = 50.00, float $promoPrice = 35.00, int $stock = 5): Product
     {
         $product = new Product();
         $product->setName('Catan');
@@ -112,6 +112,5 @@ class CartServiceTest extends TestCase
         $this->service->addProduct($cart, $product, 2);
 
         $this->assertSame(70.00, $this->service->getTotal($cart));
-}
-
+    }
 }

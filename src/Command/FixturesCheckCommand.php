@@ -121,7 +121,7 @@ class FixturesCheckCommand extends Command
         $byUser = [];
         foreach ($addresses as $address) {
             $userId = $address->getUser()->getId();
-            if ($userId === null) {
+            if (null === $userId) {
                 continue; // ou throw, selon la logique métier
             }
             $byUser[$userId][] = $address;

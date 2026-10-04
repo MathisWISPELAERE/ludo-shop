@@ -23,7 +23,7 @@ class CategoryController extends AbstractController
         $counts = [];
         foreach ($categories as $category) {
             $categoryId = $category->getId();
-            if ($categoryId === null) {
+            if (null === $categoryId) {
                 continue;
             }
             $counts[$categoryId] = $productRepository->countActiveByCategory($category, $includeMature);
